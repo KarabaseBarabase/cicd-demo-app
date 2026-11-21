@@ -48,7 +48,7 @@ pipeline {
 		'''
 	}	
 	
-	stage('Archive") {
+	stage('Archive') {
 	    steps {
 	        archiveArtifacts artifacts: 'app.tar.gz', fingerprint: true
 	    }
