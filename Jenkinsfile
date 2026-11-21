@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-	string(name: 'REPO_URL', defualtValue: 'https://github.com/KarabaseBarabase/cicd-demo-app.git', description: 'link to fork')
+	string(name: 'REPO_URL', defaultValue: 'https://github.com/KarabaseBarabase/cicd-demo-app.git', description: 'link to fork')
 	string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'branch for build')
 	booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'run unit-tests')
     }
@@ -57,6 +57,7 @@ pipeline {
 
     post {
 	success { echo "Build ${env.BUILD_NUMBER} success" }
-	failure { echo "Build $env.BUILD_NUMBER} failure" }
+	failure { echo "Build ${env.BUILD_NUMBER} failure" }
    }
+
 }
