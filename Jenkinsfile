@@ -1,5 +1,5 @@
 pipeline {
-    agents any
+    agent any
 
     parameters {
 	string(name: 'REPO_URL', defualtValue: 'https://github.com/KarabaseBarabase/cicd-demo-app.git', description: 'link to fork')
@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
 	    steps {
 		git url: params.REPO_URL, branch : params.GIT_BRANCH
-		sh 'echo "Branch: ${GIT_BRANCH}"; echo "SHA: $(git rev-parse HEAD)"'
+		sh "echo \"Branch: ${params.GIT_BRANCH}\"; echo \"SHA: \$(git rev-parse HEAD)\""
 	    }
 	}
 
@@ -31,18 +31,21 @@ pipeline {
 	stage('Test') {
 	    when {
 		expression {
-		    PARAMS.RUN_TESTS 
+		    params.RUN_TESTS 
 		}
 	    }
 	    steps {
-		sh 'python3 -im unittest discover -s tests -v'
+		sh "python3 -m unittest discover -s tests -v"
 	    }
 	}
 
 	stage('Build') {
-	    echo "Build num: $BUILD_NUMBER" > build-info.txt
-	    echo "Commit sha: $(git rev-parse HEAD)" >> build-info.txt
-	    tar -czf app.tar.gz --exclude='.git' .
+	    steps {
+		sh ```   
+		    echo "Build num: $BUILD_NUMBER" > build-info.txt
+		    echo "Commit sha: $(git rev-parse HEAD)" >> build-info.txt
+		    tar -czf app.tar.gz --exclude='.git' .
+		```
 	}	
 	
 	stage('Archive") {
