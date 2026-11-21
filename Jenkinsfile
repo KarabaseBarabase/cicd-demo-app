@@ -41,11 +41,11 @@ pipeline {
 
 	stage('Build') {
 	    steps {
-		sh ```   
+		sh '''   
 		    echo "Build num: $BUILD_NUMBER" > build-info.txt
 		    echo "Commit sha: $(git rev-parse HEAD)" >> build-info.txt
 		    tar -czf app.tar.gz --exclude='.git' .
-		```
+		'''
 	}	
 	
 	stage('Archive") {
