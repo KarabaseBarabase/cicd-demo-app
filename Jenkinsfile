@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-	string(name: 'REPO_URL', defaultValue: 'https://github.com/KarabaseBarabase/cicd-demo-app.git', description: 'link to fork')
+	string(name: 'REPO_URL', defaultValue: 'https://github.com/KarabaseBarabase/cicd-demo-app.git')
 	string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'branch for build')
 	booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'run unit-tests')
     }
@@ -46,6 +46,7 @@ pipeline {
 		    echo "Commit sha: $(git rev-parse HEAD)" >> build-info.txt
 		    tar -czf app.tar.gz --exclude='.git' .
 		'''
+	    }
 	}	
 	
 	stage('Archive') {
